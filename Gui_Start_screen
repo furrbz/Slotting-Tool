@@ -1,0 +1,74 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Oct 19 17:53:56 2018
+
+@author: furrbz
+"""
+import tkinter as tk
+from tkinter import *
+import tkinter.messagebox
+from tkinter.filedialog import askopenfilename
+import pandas as pd
+
+
+def doNothing():
+    print("ok I wont")
+    
+def import_csv_data():
+    global v
+    csv_file_path = askopenfilename()
+    print(csv_file_path)
+    v.set(csv_file_path)
+    
+
+
+root = tk.Tk()
+
+#**************MAIN MENU****************
+
+
+menu = Menu(root)
+root.config(menu=menu)
+
+subMenu = Menu(menu)
+menu.add_cascade(label="File", menu=subMenu)
+subMenu.add_command(label="New Project", command=doNothing)
+subMenu.add_command(label="Open Project", command=doNothing)
+subMenu.add_separator()
+subMenu.add_command(label="Exit", command=doNothing)
+
+editMenu =Menu(menu)
+menu.add_cascade(label="Edit", menu=editMenu)
+editMenu.add_command(label="Redo", command=doNothing)
+
+root.title('Slotting Tool')
+root.geometry("800x400")
+
+#************************IMPORT CSV and BROWSE BUTTONS********************
+
+tk.Button(root, text="Load Item Data" , command=import_csv_data).grid(row=3, sticky=W, pady=4)  #use column=4 or whatever instead of sticky
+tk.Button(root, text="Load Location Library" , command=import_csv_data).grid(row=5, sticky=W, pady=4) #use anchor=W to align text left
+tk.Button(root, text="Browse Item Data" , anchor=W, command=doNothing).grid(row=3, column=5, pady=4)
+tk.Button(root, text="Browse Location Library" , anchor=W, command=doNothing).grid(row=5, column=5, pady=4)
+
+Label(root, text="Type of replenishment:").grid(row=6, sticky=W)
+var1=IntVar()
+tk.Checkbutton(root, text="Delivery Schedule", variable=var1).grid(row=7, column=4)
+var2=IntVar()
+tk.Checkbutton(root, text="Days on Hand Schedule", variable=var1).grid(row=8, column=4)
+
+
+
+
+tk.Button(root, text="Close", command=root.destroy).grid(row= 20, column=4)
+
+# **********************TOOLBAR*******************
+
+toolbar = Frame(root, bg="blue")
+
+
+#***************Message Box**********************88
+
+#tk.messagebox.showinfo('New or Load', 'Open new instance or load saved')
+
+root.mainloop()
