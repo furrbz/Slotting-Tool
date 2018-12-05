@@ -1,0 +1,32 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns; sns.set()
+
+
+df = pd.read_excel('C:/Users/abrozkd\Desktop\sample.xlsx')
+#df.pivot('row_labels', 'column_labels','values')  #use this or the line below
+#df.pivot('row_labels', 'column_labels')['Values'].head()
+
+#fig = plt.figure(figsize=(20,20))
+
+#pivot_table = df.pivot_table(['aisle'], ['bay'])['Lines']
+
+
+aisleBay_pivot = df.pivot_table(columns ='aisle', index =['bay'], values='Lines', aggfunc=np.sum, fill_value = 0)
+#pivot_table = df.pivot_table(columns =['aisle'], index =['bay'], values=['Lines'], aggfunc=np.sum, fill_value = 0)
+
+#final_pivot = pivot_table.dropna()  was supposed to drop NaN but worthless
+print(aisleBay_pivot)
+
+
+areaAisle_pivot = df.pivot_table(columns ='aisle', index =['bay'], values='Lines', aggfunc=np.sum, fill_value = 0)
+
+
+plt.xlabel('Aisle', size=15)
+plt.ylabel('Bay', size=15)
+plt.title('Aisle/Bay Heatmap', size=15)
+sns.heatmap(aisleBay_pivot, annot=True, annot_kws={"size":7}, 
+            fmt=".1f", linewidths=.5, square=True, 
+            cmap='Blues_r')
+
